@@ -1,1 +1,1 @@
-correct server response
+change deprecated methods
