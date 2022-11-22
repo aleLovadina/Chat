@@ -13,38 +13,38 @@ public class Server {
 		// TODO Auto-generated method stub
 
 		try{
-			System.out.println("Server partito...");
-			//creo un server socket sulla porta prescelta
+			System.out.println("Server started...");
+			//server socket on the chosen port
 			ServerSocket server=new ServerSocket(6789);
 			
-			//attendo un client
+			//waiting for a client
 			Socket client=server.accept();
 			
-			//chiudo il server per inibire altri client
+			//closing the server so no other clients can connect to the same port
 			server.close();
-			//input da tastiera
+			//keyboard input
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-			//associo lo stream di I/O al socket
+			//I/O stream on server socket
 			DataInputStream in=new DataInputStream(client.getInputStream());
 			//BufferedReader in=new BufferedReader(new InputStreamReader(client.getInputStream()));
 			DataOutputStream out=new DataOutputStream(client.getOutputStream());
 			
 			String s = " ";
-			String stringaLetta= " ";
+			String readString= " ";
 			do {
-				//leggo e visualizzo la risposta
-				stringaLetta =in.readLine();
-				System.out.println("C:"+stringaLetta);
+				//reading and visualize the response
+				readString =in.readLine();
+				System.out.println("C:"+readString);
 				
-				if(stringaLetta.equals("exit")==false) {
-					System.out.print("S:");
+				if(readString.equals("exit")==false) {
+					System.out.print("Server:");
 					
 					s= keyboard.readLine();
 					
-					//provo a comunicare con il server
+					//trying to communicate to the client
 					out.writeBytes(s+"\n");
 				}
-			}while(s.equals("exit")==false && stringaLetta.equals("exit")==false);	
+			}while(s.equals("exit")==false && readString.equals("exit")==false);	
 
 			client.close();
 

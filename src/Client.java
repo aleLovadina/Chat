@@ -1,5 +1,5 @@
-//NB: deve iniziare il client; segue risposta del server e via di seguito 
-//termina quando uno dei due scrive: exit
+//ReadBeforeUsing: the first message needs to be sent by the client, then the server can reply and so on
+//both client and server processes terminate when any of them writes: exit
 
 
 
@@ -17,39 +17,39 @@ public class Client {
 		
 		
 		try{
-			System.out.println("Client partito...");
-			//input da tastiera
+			System.out.println("Client started...");
+			//keyboard input
 			//BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 			
 			Scanner scanner=new Scanner (System.in);
-			//creo il socket
+			//socket creation
 			Socket client=new Socket("localhost",6789);
 			
-			//associo gli stream per leggere e scrivere sul socket
+			//streams to read and write using the socket
 			DataOutputStream out=new DataOutputStream (client.getOutputStream());
 			DataInputStream in=new DataInputStream(client.getInputStream());
 			
 			String c = " ";
-			String stringaLetta= " ";
+			String readString= " ";
 			do {
 				
 				//c= keyboard.readLine();
-				System.out.print("C:");
+				System.out.print("Client:");
 				c=scanner.nextLine();
 				
-				//provo a comunicare con il server
+				//try to communicate with the server
 				out.writeBytes(c+"\n");
 				
 				if(c.equals("exit")==false) {
 					//leggo e visualizzo la risposta
 					
-					stringaLetta =in.readLine();  //deprecato
-					//stringaLetta=in.readUTF();  //non funziona!?	
-					System.out.println("S:"+stringaLetta);
+					readString =in.readLine();  //deprecated
+					//readString=in.readUTF();  //doesn't work!?	
+					System.out.println("S:"+readString);
 				}			
-			}while(c.equals("exit")==false && stringaLetta.equals("exit")==false);
+			}while(c.equals("exit")==false && readString.equals("exit")==false);
 			
-			//chiudo la connessione
+			//closing the connection
 			client.close();
 		}
 		catch (Exception e){
